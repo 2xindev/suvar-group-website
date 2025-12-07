@@ -1,11 +1,22 @@
-import { Inter } from 'next/font/google';
+import { Inter, Noto_Sans_Arabic } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import Navbar from '@/components/layout/Navbar';
+import LanguageGate from '@/components/layout/LanguageGate';
 import { Providers } from './providers';
 import '@/app/globals.css';
 
-// Removed Arabic font temporarily to isolate issues
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const notoSansArabic = Noto_Sans_Arabic({
+    subsets: ['arabic'],
+    variable: '--font-noto-arabic',
+    weight: ['400', '600', '700']
+});
+
+export const metadata = {
+    title: 'Suvar Group',
+    description: 'Premium Architecture & Production',
+};
 
 export default async function LocaleLayout({
                                                children,
@@ -14,17 +25,25 @@ export default async function LocaleLayout({
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
 }) {
+    // 1. Await params (Required for Next.js 15)
     const { locale } = await params;
+
+    // 2. Get messages
     const messages = await getMessages();
 
+    // 3. Determine direction and font
+    const dir = locale === 'ar' ? 'rtl' : 'ltr';
+    const langFont = locale === 'ar' ? notoSansArabic.className : inter.className;
+
     return (
-        <html lang={locale}>
-        <body className={`${inter.className} bg-white dark:bg-black`}>
+        <html lang={locale} dir={dir} suppressHydrationWarning>
+        <body className={`${langFont} bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200 transition-colors duration-500`}>
         <NextIntlClientProvider messages={messages}>
             <Providers>
-                {/* Navbar and Gate are COMMENTED OUT for testing */}
-                {/* <LanguageGate /> */}
-                {/* <Navbar locale={locale} /> */}
+                <div className="fixed inset-0 -z-10 opacity-30 dark:opacity-20 bg-gradient-to-r from-rose-100 via-sky-100 to-amber-100 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900 animate-gradient-x pointer-events-none" />
+
+                <LanguageGate />
+                <Navbar locale={locale} />
 
                 <main className="min-h-screen pt-20">
                     {children}

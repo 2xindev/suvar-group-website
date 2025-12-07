@@ -1,8 +1,9 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next';
 
-// BURASI ÖNEMLİ: Parantez içine dosya yolunu tam olarak yazıyoruz
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+// Use the default plugin without arguments.
+// It automatically looks for ./src/i18n/request.ts
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
     /* config options here */
