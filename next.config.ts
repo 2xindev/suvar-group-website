@@ -1,8 +1,8 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 import type { NextConfig } from 'next';
 
-// Use the default plugin without arguments.
-// It automatically looks for ./src/i18n/request.ts
+// Leaving this empty () tells the plugin to look for src/i18n/request.ts automatically.
+// This is much safer on Windows.
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
