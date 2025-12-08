@@ -8,5 +8,8 @@
     "about": "About",
     "projects": "Projects",
     "contact": "Contact"
+  },
+  "LanguageGate": {
+    "welcome": "Welcome"
   }
 }

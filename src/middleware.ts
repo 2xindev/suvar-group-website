@@ -1,15 +1,13 @@
 import createMiddleware from 'next-intl/middleware';
 
 export default createMiddleware({
-    // Desteklenen diller
     locales: ['en', 'tr', 'ar'],
-    // Varsayılan dil
     defaultLocale: 'en',
-    // URL'de her zaman dil kodu olsun mu? (as-needed: gerekirse koyar)
-    localePrefix: 'as-needed'
+    // DÜZELTME: 'as-needed' yerine 'always' yapıyoruz.
+    // Böylece /en yazınca silinmeyecek, debugging kolaylaşacak.
+    localePrefix: 'always'
 });
 
 export const config = {
-    // Sistem dosyaları hariç her şeyi yakala
     matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };
