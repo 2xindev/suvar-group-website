@@ -1,15 +1,15 @@
 import createMiddleware from 'next-intl/middleware';
 
 export default createMiddleware({
+    // Desteklenen diller
     locales: ['en', 'tr', 'ar'],
+    // Varsayılan dil
     defaultLocale: 'en',
-    // "as-needed" means the default locale (en) won't have a /en prefix
+    // URL'de her zaman dil kodu olsun mu? (as-needed: gerekirse koyar)
     localePrefix: 'as-needed'
 });
 
 export const config = {
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
+    // Sistem dosyaları hariç her şeyi yakala
     matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

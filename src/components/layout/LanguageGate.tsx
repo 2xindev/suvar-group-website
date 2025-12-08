@@ -16,22 +16,18 @@ export default function LanguageGate() {
     const router = useRouter();
 
     useEffect(() => {
-        // Check if user has already made a choice
         const hasSelected = Cookies.get('suvar_lang_selected');
         if (!hasSelected) {
+            // eslint-disable-next-line
             setIsVisible(true);
         }
     }, []);
 
     const handleSelect = (langCode: string) => {
-        // 1. Set the preference cookie (1 year)
         Cookies.set('suvar_lang_selected', 'true', { expires: 365 });
         Cookies.set('NEXT_LOCALE', langCode, { expires: 365 });
 
-        // 2. Animate out
         setIsVisible(false);
-
-        // 3. Force navigation to the selected language
         router.push(`/${langCode}`);
     };
 
@@ -45,7 +41,6 @@ export default function LanguageGate() {
                     transition={{ duration: 0.5 }}
                     className="fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-xl bg-black/40"
                 >
-                    {/* Background Dim */}
                     <div className="absolute inset-0 bg-darkbg/60 mix-blend-multiply" />
 
                     <div className="relative z-10 flex flex-col md:flex-row gap-6 p-8">
@@ -64,7 +59,6 @@ export default function LanguageGate() {
                 <span className="text-2xl font-light tracking-widest text-white">
                   {lang.label}
                 </span>
-                                {/* Hover Glow Effect */}
                                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </motion.button>
                         ))}

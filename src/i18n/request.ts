@@ -4,18 +4,31 @@ import {getRequestConfig} from 'next-intl/server';
 const locales = ['en', 'tr', 'ar'];
 
 export default getRequestConfig(async ({locale}) => {
-    // Console log to debug if this file is running
-    console.log(`[i18n] Loading locale: ${locale}`);
+    // DÜZELTME 1: "as any" yerine tip zorlamasını kaldırdık veya string olarak kabul ettik
+    if (!locales.includes(locale)) notFound();
 
-    if (!locales.includes(locale as any)) notFound();
-
+    let messages;
     try {
-        return {
-            // Use the @ alias to point to src/messages safely
-            messages: (await import(`@/messages/${locale}.json`)).default
-        };
+        switch (locale) {
+            case 'en':
+                messages = (await import('../messages/en.json')).default;
+                break;
+            case 'tr':
+                messages = (await import('../messages/tr.json')).default;
+                break;
+            case 'ar':
+                messages = (await import('../messages/ar.json')).default;
+                break;
+            default:
+                notFound();
+        }
     } catch (error) {
-        console.error(`[i18n] Error loading messages for ${locale}:`, error);
-        return { messages: {} }; // Return empty to prevent crash
+        // DÜZELTME 2: error değişkenini konsola yazdırarak "unused" hatasını çözdük
+        console.error('Mesajlar yüklenirken hata oluştu:', error);
+        notFound();
     }
+
+    return {
+        messages
+    };
 });

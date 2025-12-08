@@ -1,10 +1,11 @@
 import { Inter, Noto_Sans_Arabic } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import Navbar from '@/components/layout/Navbar';
-import LanguageGate from '@/components/layout/LanguageGate';
+// DÜZELTME: @ yerine göreli yollar (relative paths) kullanıyoruz
+import Navbar from '../../components/layout/Navbar';
+import LanguageGate from '../../components/layout/LanguageGate';
 import { Providers } from './providers';
-import '@/app/globals.css';
+import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const notoSansArabic = Noto_Sans_Arabic({
@@ -25,13 +26,9 @@ export default async function LocaleLayout({
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
 }) {
-    // 1. Await params (Required for Next.js 15)
     const { locale } = await params;
-
-    // 2. Get messages
     const messages = await getMessages();
 
-    // 3. Determine direction and font
     const dir = locale === 'ar' ? 'rtl' : 'ltr';
     const langFont = locale === 'ar' ? notoSansArabic.className : inter.className;
 
@@ -40,6 +37,7 @@ export default async function LocaleLayout({
         <body className={`${langFont} bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200 transition-colors duration-500`}>
         <NextIntlClientProvider messages={messages}>
             <Providers>
+                {/* Arka plan efekti */}
                 <div className="fixed inset-0 -z-10 opacity-30 dark:opacity-20 bg-gradient-to-r from-rose-100 via-sky-100 to-amber-100 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900 animate-gradient-x pointer-events-none" />
 
                 <LanguageGate />
