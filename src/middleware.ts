@@ -3,8 +3,8 @@ import createMiddleware from 'next-intl/middleware';
 export default createMiddleware({
     locales: ['en', 'tr', 'ar'],
     defaultLocale: 'en',
-    // DÜZELTME: 'as-needed' yerine 'always' yapıyoruz.
-    // Böylece /en yazınca silinmeyecek, debugging kolaylaşacak.
+    // BURASI ÇOK ÖNEMLİ: Bunu 'always' yaparsan URL her zaman /en, /tr şeklinde olur.
+    // Bu, 404 hatalarını ve yönlendirme karmaşasını çözer.
     localePrefix: 'always'
 });
 
