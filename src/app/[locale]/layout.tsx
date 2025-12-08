@@ -1,7 +1,7 @@
 import { Inter, Noto_Sans_Arabic } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-// DÜZELTME: @ yerine göreli yollar (relative paths) kullanıyoruz
+import type { Metadata } from 'next';
 import Navbar from '../../components/layout/Navbar';
 import LanguageGate from '../../components/layout/LanguageGate';
 import { Providers } from './providers';
@@ -14,7 +14,7 @@ const notoSansArabic = Noto_Sans_Arabic({
     weight: ['400', '600', '700']
 });
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'Suvar Group',
     description: 'Premium Architecture & Production',
 };
@@ -37,12 +37,9 @@ export default async function LocaleLayout({
         <body className={`${langFont} bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200 transition-colors duration-500`}>
         <NextIntlClientProvider messages={messages}>
             <Providers>
-                {/* Arka plan efekti */}
                 <div className="fixed inset-0 -z-10 opacity-30 dark:opacity-20 bg-gradient-to-r from-rose-100 via-sky-100 to-amber-100 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900 animate-gradient-x pointer-events-none" />
-
                 <LanguageGate />
                 <Navbar locale={locale} />
-
                 <main className="min-h-screen pt-20">
                     {children}
                 </main>

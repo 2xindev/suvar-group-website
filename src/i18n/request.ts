@@ -4,11 +4,11 @@ import {getRequestConfig} from 'next-intl/server';
 const locales = ['en', 'tr', 'ar'];
 
 export default getRequestConfig(async ({locale}) => {
-    // DÜZELTME 1: "as any" yerine tip zorlamasını kaldırdık veya string olarak kabul ettik
-    if (!locales.includes(locale)) notFound();
+    if (!locales.includes(locale as string)) notFound();
 
     let messages;
     try {
+        // DÜZELTME: Dosyaları elle gösteriyoruz.
         switch (locale) {
             case 'en':
                 messages = (await import('../messages/en.json')).default;
@@ -23,12 +23,12 @@ export default getRequestConfig(async ({locale}) => {
                 notFound();
         }
     } catch (error) {
-        // DÜZELTME 2: error değişkenini konsola yazdırarak "unused" hatasını çözdük
-        console.error('Mesajlar yüklenirken hata oluştu:', error);
+        console.error(error);
         notFound();
     }
 
     return {
+        locale: locale as string,
         messages
     };
 });
