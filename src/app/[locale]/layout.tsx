@@ -35,11 +35,14 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} dir={dir} suppressHydrationWarning>
         <body className={`${langFont} bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200 transition-colors duration-500`}>
-        <NextIntlClientProvider messages={messages}>
+        {/* KRİTİK DÜZELTME: locale={locale} eklendi. Bu olmadan çeviriler anlık değişmez. */}
+        <NextIntlClientProvider messages={messages} locale={locale}>
             <Providers>
                 <div className="fixed inset-0 -z-10 opacity-30 dark:opacity-20 bg-gradient-to-r from-rose-100 via-sky-100 to-amber-100 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900 animate-gradient-x pointer-events-none" />
+
                 <LanguageGate />
                 <Navbar locale={locale} />
+
                 <main className="min-h-screen pt-20">
                     {children}
                 </main>
